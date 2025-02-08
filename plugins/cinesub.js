@@ -117,7 +117,7 @@ cmd({
                       body: '® ᴋꜱᴠɪ ᴇxᴇ ᴠ1 💀',
                       mediaType: 1,
                       sourceUrl: "",
-                      thumbnailUrl: 'https://telegra.ph/file/3e8d96736e0595a93ef01-ea588bd390a8ffbfd5.jpg', // This should match the image URL provided above
+                      thumbnailUrl: 'https://telegra.ph/file/7dfa3d970754fecb3bedf-dc19a72085304a0097.jpg', // This should match the image URL provided above
                       renderLargerThumbnail: true,
                       showAdAttribution: false
                   }
@@ -183,7 +183,7 @@ cmd({
                             body: '® ᴋᴀᴠɪ ᴇxᴇ ᴠ1💀',
                             mediaType: 1,
                             sourceUrl: "",
-                            thumbnailUrl: 'https://telegra.ph/file/3e8d96736e0595a93ef01-ea588bd390a8ffbfd5.jpg', // This should match the image URL provided above
+                            thumbnailUrl: 'https://telegra.ph/file/7dfa3d970754fecb3bedf-dc19a72085304a0097.jpg', // This should match the image URL provided above
                             renderLargerThumbnail: true,
                             showAdAttribution: false
                         }
