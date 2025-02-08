@@ -2,7 +2,7 @@ const { runtime, fetchJson } = require('../lib/functions')
 const config = require('../config');
 const { cmd } = require('../command');
 cmd({
-    pattern: "in",
+    pattern: "subins",
     react: '⬆',    
     dontAddCommandList: true,
     filename: __filename
@@ -10,26 +10,24 @@ cmd({
     async (conn, mek, m, { reply, isDev, from, q, prefix }) => {
         try {
         
+        if (!q) return await reply('*Please Give Me Link..! 🖊️*')
 
-const data = await fetchJson(`https://vajira-official-api.vercel.app/movie/sinhalasub/movie?url=${q}`)
-
-
-let  msg = `*_☘Title ➩ ${data.result.data.title}_*\n\n`
-	 msg += `📽️ ━━━━━━━━━━━━━━━━━━━📽️\n\n`	
-         msg += `	  📆  *Date* ➩ ${data.result.data.date}\n\n`
-         msg += `	  🏷️  *Rate* ➩ ${data.result.data.tmdbRate}\n\n`
-     	 msg += `	  🌍  *Country* ➩ ${data.result.data.country}\n\n`	
-         msg += `	  🕘  *Vote* ➩ ${data.result.data.sinhalasubVote}\n\n`
-         msg += `	  🕘  *Category* ➩ ${data.result.data.category}\n\n`
-    	 msg += `*📍Link* ➩ ${q}\n\n`	
-    	 msg += `📽️ ━━━━━━━━━━━━━━━━━━━📽️\n\n\n`	
-         msg += `> ★❮• 𝗞𝗔𝗩𝗜 𝗘𝗫𝗘 𝗦𝗜𝗡𝗛𝗔𝗟𝗔𝗦𝗨𝗕 𝗠𝗢𝗩𝗜𝗘 𝗗𝗟 •❯★` 
 		
-return await conn.sendMessage(from, { image: { url:data.result.data.images[0] } , caption: msg } , { quoted: mek })
-//await conn.sendMessage(from , { text: msg  }, { quoted: mek } )	
-await conn.sendMessage(from, { react: { text: `✅`, key: mek.key }}) 
+const data = await fetchJson(`${config.API}/api/sinhalasubs/movie?url=${q}&apikey=${config.APIKEY}`)
+const msg = `*_☘ Title: ${data.data.data.mainDetails.maintitle}_*
+
+- *Year:* ${data.data.data.mainDetails.dateCreated}
+- *Rating:* ${data.data.data.mainDetails.runtime}
+- *ImdbRating* ${data.data.data.moviedata.imdbRating}
+- *ImdbvotesCount* ${data.data.data.moviedata.imdbvotesCount}
+
+*⛏️ Link:* ${q}
+
+${config.FOOTER}`
+		
+return await conn.sendMessage(from, { image: { url:data.data.data.moviedata.imageUrls[0] } , caption: msg } , { quoted: mek })
 } catch (e) {
-reply('*error!!*')
+reply('*_First activate location sender_*\n\n- Eg:- .activate\n- Then reply 1.1')
             console.log(e)
             }
-    })       
+    })
