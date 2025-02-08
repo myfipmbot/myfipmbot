@@ -5,7 +5,7 @@ function convertToBool(text, fault = 'true') {
     return text === fault ? true : false;
 }
 module.exports = {
-SESSION_ID: process.env.SESSION_ID || "KAVI-EXE=frpi3Jza#lmfizzZTW_j9sec5JQXjdDYEVgPlvYhzmxhtXK_7tmk",
+SESSION_ID: process.env.SESSION_ID || "KAVI-EXE=u3RG0BZI#wPMjIgoPCLKRkOzdswBStrbKjrn57ZirYKDRNwjahLA",
 AUTO_READ_STATUS: process.env.AUTO_READ_STATUS || "true",
 AUTO_REACT_STATUS: process.env.AUTO_REACT_STATUS || "false",
 MODE: process.env.MODE || "public",
