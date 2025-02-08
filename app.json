@@ -1,0 +1,57 @@
+{
+  "name": "KAVI_EXE-V1",
+  "description": "Javascript WhatsApp bot made by YourName",
+  "logo": "https://i.ibb.co/fVnCtHz8/temp-image.jpg",
+  "keywords": ["bot"],
+  "success_url": "/",
+
+  "env": {
+    "SESSION_ID": {
+      "description": "Put the session-id here.",
+      "required": true
+    },  
+
+    "ALIVE_IMG": {
+      "description": "Put your alive img here.",
+      "required": true
+    },
+    
+    "ALIVE_MSG": {
+      "description": "Put your alive msg here.",
+      "required": true
+    },
+
+    "AUTO_STATUS_READ": {
+      "description": "put true or false.",
+      "required": true
+    },
+
+    "AUTO_STATUS_REACT": {
+      "description": "Put  true or false.",
+      "required": true
+    },
+
+    "ANTI_CALL": {
+      "description": "Put true of false.",
+      "required": true
+    },
+
+    "AUTO_STATUS_REPLY": {
+      "description": "Put true or false.",
+      "required": true
+    },
+    
+    "AUTO_STATUS_MSG": {
+      "description": "Put your status seen msg.",
+      "required": true
+    }
+
+},
+
+     "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+        }
+     ],
+  "stack": "heroku-24"
+}
