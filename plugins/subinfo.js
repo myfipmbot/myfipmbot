@@ -2,7 +2,7 @@ const { runtime, fetchJson } = require('../lib/functions')
 const config = require('../config');
 const { cmd } = require('../command');
 cmd({
-    pattern: "subins",
+    pattern: "in",
     react: '⬆',    
     dontAddCommandList: true,
     filename: __filename
