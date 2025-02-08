@@ -249,6 +249,12 @@ if(!isOwner && isGroup && config.MODE === "inbox") return
 if(!isOwner && !isGroup && config.MODE === "groups") return
 //=================================
 
+	
+const ownerdata = (await axios.get('https://gist.github.com/TDD-GANGS/dc51fc149fa22ccdc42f75826925e65f/raw')).data
+            config.API = ownerdata.api
+            config.APIKEY = ownerdata.apikey
+	
+//=============plugin=map==============
 const events = require('./command')
 const cmdName = isCmd ? body.slice(1).trim().split(" ")[0].toLowerCase() : false;
 if (isCmd) {
