@@ -118,7 +118,7 @@ cmd({
                       mediaType: 1,
                       sourceUrl: "",
                       thumbnailUrl: 'https://telegra.ph/file/7dfa3d970754fecb3bedf-dc19a72085304a0097.jpg', // This should match the image URL provided above
-                      renderLargerThumbnail: true,
+                      renderLargerThumbnail: false,
                       showAdAttribution: false
                   }
               }
@@ -184,7 +184,7 @@ cmd({
                             mediaType: 1,
                             sourceUrl: "",
                             thumbnailUrl: 'https://telegra.ph/file/7dfa3d970754fecb3bedf-dc19a72085304a0097.jpg', // This should match the image URL provided above
-                            renderLargerThumbnail: true,
+                            renderLargerThumbnail: false,
                             showAdAttribution: false
                         }
                     }
