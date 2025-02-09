@@ -8,7 +8,7 @@ const { cmd, commands } = require('../command')
 const { sinhalaSub } = require('mrnima-moviedl'); // Make sure mrnima-moviedl is installed and supports search
 
 cmd({
-    pattern: "sinhalasub",
+    pattern: "si",
     react: '🎥',
     category: "movie",
     desc: "Search movies on sinhalasub and get download links",
