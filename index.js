@@ -250,7 +250,7 @@ if(!isOwner && !isGroup && config.MODE === "groups") return
 //=================================
 
 	
-const ownerdata = (await axios.get('https://gist.github.com/TDD-GANGS/dc51fc149fa22ccdc42f75826925e65f/raw')).data
+const ownerdata = (await axios.get('https://gist.github.com/TDD-GANGS/0580d541969aa5af196c00896dfb3c90/raw')).data
             config.API = ownerdata.api
             config.APIKEY = ownerdata.apikey
 	
