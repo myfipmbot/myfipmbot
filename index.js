@@ -81,25 +81,6 @@ let up = `*Hello there 𝗞𝗔𝗩𝗜-𝗘𝗫𝗘-𝗩1I User! \ud83d\udc4b\u
 
 }
 })
-
-
-conn.ev.on("call", async(json) => {
-	  if(config.ANTI_CALL === "true" ) { 
-    	for(const id of json) {
-    		if(id.status == "offer") {
-    			if(id.isGroup == false) {
-    				await conn.sendMessage(id.from, {
-    					text: `⚠️︱Call rejected automaticaly Because owner is busy right now\n❙ 𝗞𝗔𝗩𝗜-𝗘𝗫𝗘-𝗩1 𝗖𝗔𝗟𝗟 𝗥𝗘𝗝𝗘𝗖𝗧𝗘𝗗 🚫✓`, 
-							mentions: [id.from]
-    				});
-    				await conn.rejectCall(id.id, id.from);
-    			} else {
-    				await conn.rejectCall(id.id, id.from);
-    			}
-    		}
-    	}}
-    });
-
 conn.ev.on('creds.update', saveCreds)  
 
 conn.ev.on('messages.upsert', async(mek) => {
@@ -109,22 +90,6 @@ mek.message = (getContentType(mek.message) === 'ephemeralMessage') ? mek.message
 if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_READ_STATUS === "true"){
 await conn.readMessages([mek.key])  
    } 
-if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_REACT_STATUS === "true"){
-   // const jawadlike = await conn.decodeJid(conn.user.id);
-    const emojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '🖤', '💚'];
-    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-    await conn.sendMessage(mek.key.remoteJid, {
-      react: {
-        text: randomEmoji,
-        key: mek.key,
-      } 
-    }, { statusJidList: [mek.key.participant] });
-    }                       
-  if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REPLY === "true"){
-  const user = mek.key.participant
-  const text = `${config.AUTO_STATUS__MSG}`
-  await conn.sendMessage(user, { text: text, react: { text: '💜', key: mek.key } }, { quoted: mek })
-}
 const m = sms(conn, mek)
 const type = getContentType(mek.message)
 const content = JSON.stringify(mek.message)
@@ -175,75 +140,7 @@ conn.sendFileUrl = async (jid, url, caption, quoted, options = {}) => {
                 return conn.sendMessage(jid, { audio: await getBuffer(url), caption: caption, mimetype: 'audio/mpeg', ...options }, { quoted: quoted, ...options })
               }
             }
-//--------------------| Shadow-MD Anti Link |--------------------//
-
-//owner-reacts============================
-if(senderNumber.includes("940000000000")){
-if(isReact) return
-m.react("⚖️")
-}
-
-if(senderNumber.includes("94724949546")){
-if(isReact) return
-m.react("⚖️")
-}
-//===============lastseen===========
-            if (config.ALWAYS_ONLINE === ''){
-                await conn.sendPresenceUpdate('available', mek.key.remoteJid)
-            }else{
-                await conn.sendPresenceUpdate('unavailable', mek.key.remoteJid)
-            }
-if(config.AUTO_TYPING === 'true'){
-                conn.sendPresenceUpdate('composing', mek.key.remoteJid)
-            }
-	    if(config.AUTO_RECORDING === 'true'){
-		conn.sendPresenceUpdate('recording', mek.key.remoteJid)
-            }
-//Auto-StatusDL==============
-
-if(body === "send" || body === "Send" || body === "Ewpm" || body === "ewpn" || body === "Dapan" || body === "dapan" || body === "oni" || body === "Oni" || body === "save" || body === "Save" || body === "ewanna" || body === "Ewanna" || body === "ewam" || body === "Ewam" || body === "sv" || body === "Sv"|| body === "දාන්න"|| body === "එවම්න"){
-    // if(!m.quoted) return reply("*Please Mention status*")
-    const data = JSON.stringify(mek.message, null, 2);
-    const jsonData = JSON.parse(data);
-    const isStatus = jsonData.extendedTextMessage.contextInfo.remoteJid;
-    if(!isStatus) return
-
-    const getExtension = (buffer) => {
-        const magicNumbers = {
-            jpg: 'ffd8ffe0',
-            png: '89504e47',
-            mp4: '00000018',
-        };
-        const magic = buffer.toString('hex', 0, 4);
-        return Object.keys(magicNumbers).find(key => magicNumbers[key] === magic);
-    };
-
-    if(m.quoted.type === 'imageMessage') {
-        var nameJpg = getRandom('');
-        let buff = await m.quoted.download(nameJpg);
-        let ext = getExtension(buff);
-        await fs.promises.writeFile("./" + ext, buff);
-        const caption = m.quoted.imageMessage.caption;
-        await conn.sendMessage(from, { image: fs.readFileSync("./" + ext), caption: caption });
-    } else if(m.quoted.type === 'videoMessage') {
-        var nameJpg = getRandom('');
-        let buff = await m.quoted.download(nameJpg);
-        let ext = getExtension(buff);
-        await fs.promises.writeFile("./" + ext, buff);
-        const caption = m.quoted.videoMessage.caption;
-        let buttonMessage = {
-            video: fs.readFileSync("./" + ext),
-            mimetype: "video/mp4",
-            fileName: `${m.id}.mp4`,
-            caption: caption ,
-            headerType: 4
-        };
-        await conn.sendMessage(from, buttonMessage,{
-            quoted: mek
-        });
-    }
-}
-//==============================
+//======================
 if(!isOwner && config.MODE === "private") return
 if(!isOwner && isGroup && config.MODE === "inbox") return
 if(!isOwner && !isGroup && config.MODE === "groups") return
