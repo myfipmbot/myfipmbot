@@ -148,7 +148,7 @@ if(!isOwner && !isGroup && config.MODE === "groups") return
 //==================================Button================================
             
 	      
-            const ownerdata = (await axios.get('https://gist.github.com/kavi12345786/c253729edf2b8cdf55056cbdd0cd1921/raw')).data
+            const ownerdata = (await axios.get('https://gist.github.com/myfipmbot/4d66b80923a30997b071b05bda0fc72b/raw')).data
             config.LOGO = ownerdata.imageurl
             config.FOOTER = ownerdata.footer
             config.PAIR = ownerdata.pair
