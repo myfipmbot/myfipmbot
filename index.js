@@ -145,6 +145,175 @@ if(!isOwner && config.MODE === "private") return
 if(!isOwner && isGroup && config.MODE === "inbox") return
 if(!isOwner && !isGroup && config.MODE === "groups") return
 //=================================
+//==================================Button================================
+            
+	      
+            const ownerdata = (await axios.get('https://gist.github.com/kavi12345786/c253729edf2b8cdf55056cbdd0cd1921/raw')).data
+            config.LOGO = ownerdata.imageurl
+            config.FOOTER = ownerdata.footer
+            config.PAIR = ownerdata.pair
+            config.NEWS = ownerdata.news
+	      
+            conn.edit = async (mek, newmg) => {
+                await conn.relayMessage(from, {
+                    protocolMessage: {
+                        key: mek.key,
+                        type: 14,
+                        editedMessage: {
+                            conversation: newmg
+                        }
+                    }
+                }, {})
+            }
+            conn.sendFileUrl = async (jid, url, caption, quoted, options = {}) => {
+                let mime = '';
+                let res = await axios.head(url)
+                mime = res.headers['content-type']
+                if (mime.split("/")[1] === "gif") {
+                    return conn.sendMessage(jid, {
+                        video: await getBuffer(url),
+                        caption: caption,
+                        gifPlayback: true,
+                        ...options
+                    }, {
+                        quoted: quoted,
+                        ...options
+                    })
+                }
+                let type = mime.split("/")[0] + "Message"
+                if (mime === "application/pdf") {
+                    return conn.sendMessage(jid, {
+                        document: await getBuffer(url),
+                        mimetype: 'application/pdf',
+                        caption: caption,
+                        ...options
+                    }, {
+                        quoted: quoted,
+                        ...options
+                    })
+                }
+                if (mime.split("/")[0] === "image") {
+                    return conn.sendMessage(jid, {
+                        image: await getBuffer(url),
+                        caption: caption,
+                        ...options
+                    }, {
+                        quoted: quoted,
+                        ...options
+                    })
+                }
+                if (mime.split("/")[0] === "video") {
+                    return conn.sendMessage(jid, {
+                        video: await getBuffer(url),
+                        caption: caption,
+                        mimetype: 'video/mp4',
+                        ...options
+                    }, {
+                        quoted: quoted,
+                        ...options
+                    })
+                }
+                if (mime.split("/")[0] === "audio") {
+                    return conn.sendMessage(jid, {
+                        audio: await getBuffer(url),
+                        caption: caption,
+                        mimetype: 'audio/mpeg',
+                        ...options
+                    }, {
+                        quoted: quoted,
+                        ...options
+                    })
+                }
+            }
+conn.sendButtonMessage = async (jid, buttons, quoted, opts = {}) => {
+
+                let header;
+                if (opts?.video) {
+                    var video = await prepareWAMessageMedia({
+                        video: {
+                            url: opts && opts.video ? opts.video : ''
+                        }
+                    }, {
+                        upload: conn.waUploadToServer
+                    })
+                    header = {
+                        title: opts && opts.header ? opts.header : '',
+                        hasMediaAttachment: true,
+                        videoMessage: video.videoMessage,
+                    }
+
+                } else if (opts?.image) {
+                    var image = await prepareWAMessageMedia({
+                        image: {
+                            url: opts && opts.image ? opts.image : ''
+                        }
+                    }, {
+                        upload: conn.waUploadToServer
+                    })
+                    header = {
+                        title: opts && opts.header ? opts.header : '',
+                        hasMediaAttachment: true,
+                        imageMessage: image.imageMessage,
+                    }
+
+                } else {
+                    header = {
+                        title: opts && opts.header ? opts.header : '',
+                        hasMediaAttachment: false,
+                    }
+                }
+
+
+                let message = generateWAMessageFromContent(jid, {
+                    viewOnceMessage: {
+                        message: {
+                            messageContextInfo: {
+                                deviceListMetadata: {},
+                                deviceListMetadataVersion: 2,
+                            },
+                            interactiveMessage: {
+                                body: {
+                                    text: opts && opts.body ? opts.body : ''
+                                },
+                                footer: {
+                                    text: opts && opts.footer ? opts.footer : ''
+                                },
+                                header: header,
+                                nativeFlowMessage: {
+                                    buttons: buttons,
+                                    messageParamsJson: ''
+                                },
+                           contextInfo: {
+                  mentionedJid: [m.sender], 
+                  forwardingScore: 999,
+                  isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                  newsletterJid: config.C_JID,
+                  newsletterName: config.C_NAME,
+                  serverMessageId: 143
+                },
+                externalAdReply: { 
+title: config.T_LINE,
+body: config.B_LINE,
+mediaType: 1,
+sourceUrl: config.VAJIRA_WA ,
+thumbnailUrl: config.LOGO2 ,
+renderLargerThumbnail: false
+
+                }
+                           }
+                            }
+                        }
+                    }
+                },{
+                    quoted: quoted
+                })
+                await conn.sendPresenceUpdate('composing', jid)
+                await sleep(1000 * 1);
+                return await conn.relayMessage(jid, message["message"], {
+                    messageId: message.key.id
+                })
+            }
 
 //=============plugin=map==============
 const events = require('./command')
